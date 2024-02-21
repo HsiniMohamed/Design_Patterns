@@ -1,7 +1,6 @@
 package com.example.demo.builderPattern.model.repository;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,10 +13,21 @@ import com.example.demo.builderPattern.model.BankAccount;
 import com.example.demo.builderPattern.model.Director;
 
 public class AccountRepositoryImpl implements AccountRepository{
+	
+	private static final AccountRepositoryImpl accountRepositoryImpl;
+	
+	static {
+		System.out.println("Singleton Instantiation");
+		accountRepositoryImpl= new AccountRepositoryImpl();
+	}
 
 	private Map<Long, BankAccount> bankAccountMap =new HashMap<>();
 	private  long accountCounter=0;
 	
+	
+	private AccountRepositoryImpl() {
+	}
+
 	@Override
 	public BankAccount save(BankAccount account) {
 		Long accountId=++accountCounter;
@@ -70,6 +80,9 @@ public class AccountRepositoryImpl implements AccountRepository{
 			save(bankAccount);
 				 
 		}
+	}
+	public static AccountRepositoryImpl getInstance() {
+		return accountRepositoryImpl;
 	}
 
 }
